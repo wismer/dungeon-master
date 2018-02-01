@@ -1,4 +1,4 @@
-Types::CharacterType = GraphQL::ObjectType.define do
+Types::CharacterType = GraphQL::InterfaceType.define do
   name "Character"
 
   implements GraphQL::Relay::Node.interface
@@ -22,4 +22,11 @@ Types::CharacterType = GraphQL::ObjectType.define do
   field :trained_skills, [!types.String]
   field :max_hp, !types.Integer
   field :current_hp, !types.Integer
+end
+
+Types::CharacterSummaryType = GraphQL::ObjectType.define do
+  name "CharacterSummary"
+
+  field :name, !types.String
+  field :id, !types.ID
 end

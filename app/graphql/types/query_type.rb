@@ -25,6 +25,12 @@ Types::QueryType = GraphQL::ObjectType.define do
     }
   end
 
+  field :campaignsWithCharactersAndScenes, types[Types::CampaignSummaryType], "wtf" do
+    resolve -> (obj, args, ctxt) {
+      Campaign.as_summary
+    }
+  end
+
   field :skills, types[Types::SkillType], "all skills" do
     description "ok ok"
 

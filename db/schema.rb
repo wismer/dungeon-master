@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180122205744) do
+ActiveRecord::Schema.define(version: 20180131030739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(version: 20180122205744) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "url_slug"
+  end
+
+  create_table "character_classes", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -44,7 +51,13 @@ ActiveRecord::Schema.define(version: 20180122205744) do
     t.boolean "is_npc", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "race_id"
+    t.bigint "character_class_id"
+    t.bigint "campaign_id"
+    t.index ["campaign_id"], name: "index_characters_on_campaign_id"
+    t.index ["character_class_id"], name: "index_characters_on_character_class_id"
     t.index ["player_id"], name: "index_characters_on_player_id"
+    t.index ["race_id"], name: "index_characters_on_race_id"
   end
 
   create_table "places", force: :cascade do |t|
@@ -57,6 +70,12 @@ ActiveRecord::Schema.define(version: 20180122205744) do
   end
 
   create_table "players", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "races", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -80,5 +99,8 @@ ActiveRecord::Schema.define(version: 20180122205744) do
     t.index ["ability_id"], name: "index_skills_on_ability_id"
   end
 
+  add_foreign_key "characters", "campaigns"
+  add_foreign_key "characters", "character_classes"
   add_foreign_key "characters", "players"
+  add_foreign_key "characters", "races"
 end

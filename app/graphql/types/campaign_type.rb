@@ -14,16 +14,22 @@ Types::BaseCampaignType = GraphQL::InterfaceType.define do
 
   field :title, !types.String
   field :url_slug, !types.String
+  field :setting, types.String
+  field :areas_of_interest, types[types.String]
+  field :desc, types.String
   field :updated_at, !types.String
   field :created_at, !types.String
 end
 
-Types::CampaignType = GraphQL::ObjectType.define do
+Types::CampaignType = GraphQL::InterfaceType.define do
   name "CampaignType"
 
   field :title, types.String
   field :id, types.ID
   field :created_at, types.String
+  field :setting, types.String
+  field :areas_of_interest, types[types.String]
+  field :desc, types.String
   field :url_slug, types.String
   field :updated_at, types.String
 end

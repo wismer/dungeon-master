@@ -5,4 +5,8 @@ class Campaign < ApplicationRecord
 	scope :as_summary, -> () {
 		includes(:characters)
 	}
+
+	def url_slug
+		title.parameterize
+	end
 end
